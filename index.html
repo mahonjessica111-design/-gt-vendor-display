@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#05070b;}
+body{display:flex;align-items:center;justify-content:center;}
+#readout{font-family:Consolas,'Courier New',monospace;font-size:min(21vw,180px);font-weight:700;white-space:nowrap;line-height:1;letter-spacing:.02em;}
+.price{color:#eafaff;text-shadow:0 0 8px #eafaff,0 0 25px #7abfff,0 0 45px #4f9bff;}
+.male{color:#4bb6ff;text-shadow:0 0 8px #52bdff,0 0 25px #006eff,0 0 45px #006eff;}
+.female{color:#ff62c7;text-shadow:0 0 8px #ff79d2,0 0 25px #ff1493,0 0 45px #ff1493;}
+</style></head><body><div id="readout"></div><script>
+const q=new URLSearchParams(location.search);
+const kind=['price','male','female'].includes(q.get('kind'))?q.get('kind'):'price';
+const raw=q.get('n')||'0';
+const n=/^-?\d{1,9}$/.test(raw)?Number(raw):0;
+const el=document.getElementById('readout');
+el.className=kind;
+el.textContent=kind==='price'?'L$ '+n:kind==='male'?'♂: '+(n<0?'—':n):'♀: '+(n<0?'—':n);
+function fit(){let s=180;el.style.fontSize=s+'px';while((el.scrollWidth>innerWidth*.94||el.scrollHeight>innerHeight*.92)&&s>16){s-=2;el.style.fontSize=s+'px';}}
+addEventListener('resize',fit);fit();
+</script></body></html>
